@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'height' => $this->faker->numberBetween(140, 210),
             'activity_level' => $this->faker->randomElement(['sedentary', 'lightly_active', 'moderately_active', 'very_active']),
             'dietary_restrictions' => $this->faker->optional()->text(),
-            'notes' => $this->faker->text(),
+          
         ];
     }
 
