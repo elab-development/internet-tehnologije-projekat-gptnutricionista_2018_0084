@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\FoodItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('foodItems', FoodItemController::class);
+Route::resource('dietPlans', DietPlanController::class);
