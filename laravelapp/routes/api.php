@@ -23,9 +23,10 @@ Route::post('/register', [AuthController::class, 'register']);
 // Ruta za prijavu korisnika
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/dietPlans/kreirajPlanGPT', [DietPlanController::class, 'kreirajPlanGPT']);
+
+Route::get('/foodItems/search', [FoodItemController::class, 'search']);
 Route::resource('foodItems', FoodItemController::class);
 Route::resource('dietPlans', DietPlanController::class);
-
 
 
 Route::resource('meals', MealController::class)->except([
