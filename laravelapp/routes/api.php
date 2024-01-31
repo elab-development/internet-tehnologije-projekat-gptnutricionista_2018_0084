@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\FoodItemController;
 use App\Http\Controllers\MealController;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// Ruta za registraciju korisnika
+Route::post('/register', [AuthController::class, 'register']);
+
+// Ruta za prijavu korisnika
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::resource('foodItems', FoodItemController::class);
 Route::resource('dietPlans', DietPlanController::class);
@@ -25,3 +31,8 @@ Route::resource('dietPlans', DietPlanController::class);
 Route::resource('meals', MealController::class)->except([
     'create', 'edit'
 ]);
+
+Route::middleware(['auth'])->group(function () {
+    // Ruta za odjavu korisnika
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
