@@ -22,7 +22,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // Ruta za prijavu korisnika
 Route::post('/login', [AuthController::class, 'login']);
-
+Route::post('/dietPlans/kreirajPlanGPT', [DietPlanController::class, 'kreirajPlanGPT']);
 Route::resource('foodItems', FoodItemController::class);
 Route::resource('dietPlans', DietPlanController::class);
 

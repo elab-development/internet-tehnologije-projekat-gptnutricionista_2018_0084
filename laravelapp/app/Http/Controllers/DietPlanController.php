@@ -6,9 +6,43 @@ use App\Models\DietPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DietPlanResource;
-
+use App\Services\OpenAIService;
 class DietPlanController extends Controller
 {
+    protected $openAIService;
+    public function __construct(OpenAIService $openAIService)
+    {
+        $this->openAIService = $openAIService;
+    }
+
+    public function kreirajPlanGPT(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+           
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+ 
+        $userInput = [
+            'user_id' => $request->input('user_id'),
+            'period' => $request->input('period'),  
+            'preferences' => $request->input('preferences'),  
+            'calories' => $request->input('total_calories'),  
+        ];
+ 
+        $generatedPlan = $this->openAIService->generateDietPlan($userInput);
+
+       
+        return response()->json($generatedPlan, 200);
+    }
+
+
+
+
+
     public function index()
     {
         $dietPlans = DietPlan::all();
@@ -67,4 +101,9 @@ class DietPlanController extends Controller
 
         return response()->json(['message' => 'Diet plan deleted'], 200);
     }
+
+
+
+
+
 }
