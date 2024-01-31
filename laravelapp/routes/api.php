@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DietPlanController;
 use App\Http\Controllers\FoodItemController;
+use App\Http\Controllers\MealController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('foodItems', FoodItemController::class);
 Route::resource('dietPlans', DietPlanController::class);
+
+
+
+Route::resource('meals', MealController::class)->except([
+    'create', 'edit'
+]);
