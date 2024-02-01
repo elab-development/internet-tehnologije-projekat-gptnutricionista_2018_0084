@@ -132,3 +132,59 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.select-container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.select-label {
+  margin-right: 10px;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 150px; 
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #baabbd;  
+}
+
+.select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 150px;  
+  overflow-y: auto;
+  display: none;
+  z-index: 1;
+}
+
+.select.open .select-options {
+  display: block;
+}
+
+.select-option {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.select-option:hover {
+  background-color: #baabbd;  
+  color: white;  
+}

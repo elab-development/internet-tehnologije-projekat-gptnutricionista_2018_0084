@@ -3,25 +3,29 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import MealRow from './MealRow';  
 import ReactPaginate from 'react-paginate';
-const palette = {  //paleta boja koja se koristi za css
-    primary: '#c9c9ee',
-    secondary: '#baabbd',
-    tertiary: '#9f838c',
-    quaternary: '#8d7471',
-    quinary: '#816f68',
-  };
+
+const palette = {
+  primary: '#c9c9ee',
+  secondary: '#baabbd',
+  tertiary: '#9f838c',
+  quaternary: '#8d7471',
+  quinary: '#816f68',
+};
+
 const Meals = () => {
   const navigate = useNavigate();
   const [meals, setMeals] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(0);
   const mealsPerPage = 5; // Broj obroka po stranici
   const pageCount = Math.ceil(meals.length / mealsPerPage);
+  const [currentMeals, setCurrentMeals] = useState([]);
+
   useEffect(() => {
     const fetchMeals = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/meals');
         setMeals(response.data.data);
+        setCurrentMeals(response.data.data);
       } catch (error) {
         console.error('Greška pri dobijanju obroka:', error);
       }
@@ -30,24 +34,48 @@ const Meals = () => {
     fetchMeals();
   }, []);
 
-  const handlePageClick = (data) => {  //poziva se kada korisnik klikne dugme za paginaciju
+  const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
- //obracunava od kog do kog indeksa treba da prikazemo elemente za paginaciju
+
+  const handleCategoryChange = (category) => {
+    if (category === "") {
+      setCurrentMeals(meals);
+    } else {
+      const filteredMeals = meals.filter((meal) => meal.time_of_day === category);
+      setCurrentMeals(filteredMeals);
+    }
+    setCurrentPage(0); // Resetujemo stranicu na prvu kada se menja kategorija
+  };
+
   const offset = currentPage * mealsPerPage;
-  const currentMeals = meals.slice(offset, offset + mealsPerPage);
+  const currentMealsPaginated = currentMeals.slice(offset, offset + mealsPerPage);
+
   return (
     <div className="meals-container" style={{ backgroundColor: palette.primary }}>
       <h1 style={{ color: palette.quaternary }}>Obroci</h1>
-      <ReactPaginate
-        pageCount={pageCount}
-        onPageChange={handlePageClick}
-        containerClassName="pagination"
-        activeClassName="active"
-        previousLabel="<"
-        nextLabel=">"
-        />
-
+      <div className="select-container">
+        <label className="select-label">Kategorija:</label>
+        <div className="select-wrapper"> 
+                <select
+            className="select"
+            onChange={(e) => handleCategoryChange(e.target.value)}
+            defaultValue=""
+            >
+            <option value="">Sve</option>
+            <option value="dorucak">Doručak</option>
+            <option value="rucak">Ručak</option>
+            <option value="vecera">Večera</option>
+            <option value="uzina">Užina</option>
+            </select>
+            <div className="select-options">
+            <option value="">Sve</option>
+            <option value="dorucak">Doručak</option>
+            <option value="rucak">Ručak</option>
+            <option value="vecera">Večera</option>
+            <option value="uzina">Užina</option>
+            </div>
+        </div></div>
       <table className="meals-table">
         <thead>
           <tr>
@@ -58,7 +86,7 @@ const Meals = () => {
           </tr>
         </thead>
         <tbody>
-          {currentMeals.map((meal) => (
+          {currentMealsPaginated.map((meal) => (
             <MealRow
               key={meal.id}
               meal={meal}
@@ -67,6 +95,14 @@ const Meals = () => {
           ))}
         </tbody>
       </table>
+      <ReactPaginate
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+        previousLabel="<"
+        nextLabel=">"
+      />
     </div>
   );
 };
