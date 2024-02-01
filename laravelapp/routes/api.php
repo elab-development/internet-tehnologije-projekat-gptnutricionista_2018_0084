@@ -32,6 +32,7 @@ Route::resource('dietPlans', DietPlanController::class);
 Route::resource('meals', MealController::class)->except([
     'create', 'edit'
 ]);
+Route::post('/foodItems', [AuthController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
     // Ruta za odjavu korisnika

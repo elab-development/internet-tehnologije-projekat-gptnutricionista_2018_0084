@@ -69,43 +69,43 @@ class FoodItemController extends Controller
     }
 
     public function search(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'meal_id' => 'nullable|integer',
-        'name' => 'nullable|string',
-        'quantity' => 'nullable|numeric',
-        'unit' => 'nullable|string',
-        'calories_per_unit' => 'nullable|numeric',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'meal_id' => 'nullable|integer',
+            'name' => 'nullable|string',
+            'quantity' => 'nullable|numeric',
+            'unit' => 'nullable|string',
+            'calories_per_unit' => 'nullable|numeric',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 400);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $foodItems = FoodItem::query();
+
+        if ($request->has('meal_id')) {
+            $foodItems->where('meal_id', $request->meal_id);
+        }
+
+        if ($request->has('name')) {
+            $foodItems->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->has('quantity')) {
+            $foodItems->where('quantity', $request->quantity);
+        }
+
+        if ($request->has('unit')) {
+            $foodItems->where('unit', 'like', '%' . $request->unit . '%');
+        }
+
+        if ($request->has('calories_per_unit')) {
+            $foodItems->where('calories_per_unit', $request->calories_per_unit);
+        }
+
+        $foodItems = $foodItems->get();
+
+        return FoodItemResource::collection($foodItems);
     }
-
-    $foodItems = FoodItem::query();
-
-    if ($request->has('meal_id')) {
-        $foodItems->where('meal_id', $request->meal_id);
-    }
-
-    if ($request->has('name')) {
-        $foodItems->where('name', 'like', '%' . $request->name . '%');
-    }
-
-    if ($request->has('quantity')) {
-        $foodItems->where('quantity', $request->quantity);
-    }
-
-    if ($request->has('unit')) {
-        $foodItems->where('unit', 'like', '%' . $request->unit . '%');
-    }
-
-    if ($request->has('calories_per_unit')) {
-        $foodItems->where('calories_per_unit', $request->calories_per_unit);
-    }
-
-    $foodItems = $foodItems->get();
-
-    return FoodItemResource::collection($foodItems);
-}
 }

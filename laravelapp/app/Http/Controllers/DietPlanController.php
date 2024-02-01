@@ -33,9 +33,7 @@ class DietPlanController extends Controller
             'calories' => $request->input('total_calories'),  
         ];
  
-        $generatedPlan = $this->openAIService->generateDietPlan($userInput);
-
-       
+        $generatedPlan = $this->openAIService->generateDietPlan($userInput); 
         return response()->json($generatedPlan, 200);
     }
 
