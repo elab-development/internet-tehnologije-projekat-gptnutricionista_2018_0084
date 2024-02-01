@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import FoodItem from './FoodItem';
 
 const Detalji = () => {
     const { id } = useParams();
@@ -34,14 +35,10 @@ const Detalji = () => {
             <p><strong>Ugljeni hidrati:</strong> {meal.carbs} g</p>
             <p><strong>Masti:</strong> {meal.fats} g</p>
             <div className="food-items">
-                <h2>Hrana u obroku:</h2>
-                {meal.food_items.map(item => (
-                    <div key={item.id} className="food-item">
-                        <p>{item.name}</p>
-                        <p>Količina: {item.quantity} {item.unit}</p>
-                        <p>Kalorije po jedinici: {item.calories_per_unit}</p>
-                    </div>
-                ))}
+                <h2>Sastojci</h2>
+                {meal.food_items.map((item) => (
+                    <FoodItem key={item.id} item={item} />
+                    ))}
             </div>
         </div>
     );
