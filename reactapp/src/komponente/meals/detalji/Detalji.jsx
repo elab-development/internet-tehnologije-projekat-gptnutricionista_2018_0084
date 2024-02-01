@@ -6,7 +6,8 @@ import FoodItem from './FoodItem';
 const Detalji = () => {
     const { id } = useParams();
     const [meal, setMeal] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');  
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sorted, setSorted] = useState(false); 
 
     useEffect(() => {
         const fetchMeal = async () => {
@@ -25,10 +26,22 @@ const Detalji = () => {
         return <div>Učitavanje...</div>;
     }
 
-     
-    const filteredFoodItems = meal.food_items.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredFoodItems = meal.food_items
+        .filter((item) =>
+            item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .sort((a, b) => {
+           
+            if (sorted) {
+                return a.name.localeCompare(b.name);
+            } else {
+                return b.name.localeCompare(a.name);
+            }
+        });
+
+    const toggleSort = () => {
+        setSorted(!sorted);  
+    };
 
     return (
         <div className="meal-details-container">
@@ -40,7 +53,6 @@ const Detalji = () => {
             <p><strong>Ugljeni hidrati:</strong> {meal.carbs} g</p>
             <p><strong>Masti:</strong> {meal.fats} g</p>
 
-          
             <div className="search-box">
                 <label>Pretraži sastojke:</label>
                 <input
@@ -49,10 +61,16 @@ const Detalji = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
+                 <button onClick={toggleSort}>
+                        {sorted ? 'Sortiraj silazno' : 'Sortiraj uzlazno'}
+                    </button>
             </div>
 
             <div className="food-items">
-                <h2>Sastojci</h2>
+                <h2>
+                    Sastojci
+                   
+                </h2>
                 {filteredFoodItems.map((item) => (
                     <FoodItem key={item.id} item={item} />
                 ))}
