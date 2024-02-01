@@ -99,3 +99,36 @@
   color: white;  
   cursor: pointer;  
 }
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination li {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #baabbd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination li.active {
+  background-color: #baabbd;
+  color: white;
+}
+
+.pagination li:hover {
+  background-color: #baabbd;
+  color: white;
+}
+
+.pagination li.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
