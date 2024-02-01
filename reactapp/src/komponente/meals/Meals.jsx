@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import MealRow from './MealRow';  
 import ReactPaginate from 'react-paginate';
+import useMeals from './useMeals';
 
 const palette = {
   primary: '#c9c9ee',
@@ -14,32 +15,21 @@ const palette = {
 
 const Meals = () => {
   const navigate = useNavigate();
-  const [meals, setMeals] = useState([]);
+  const meals = useMeals();
   const [currentPage, setCurrentPage] = useState(0);
   const mealsPerPage = 5; // Broj obroka po stranici
   const pageCount = Math.ceil(meals.length / mealsPerPage);
-  const [currentMeals, setCurrentMeals] = useState([]);
-
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/meals');
-        setMeals(response.data.data);
-        setCurrentMeals(response.data.data);
-      } catch (error) {
-        console.error('Greška pri dobijanju obroka:', error);
-      }
-    };
-
-    fetchMeals();
-  }, []);
-
+  const [currentMeals, setCurrentMeals] = useState(meals);
+ 
+    useEffect(() => {
+        setCurrentMeals(meals.slice(0, mealsPerPage)); // Inicijalizujemo currentMeals kada se meals učitaju
+    }, [meals]);
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
 
   const handleCategoryChange = (category) => {
-    if (category === "") {
+    if (category == "" || category === "") {
       setCurrentMeals(meals);
     } else {
       const filteredMeals = meals.filter((meal) => meal.time_of_day === category);
