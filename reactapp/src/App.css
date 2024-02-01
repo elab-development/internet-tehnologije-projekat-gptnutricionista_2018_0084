@@ -94,3 +94,8 @@
   background-color: #8d7471;
   color: white;
 }
+.meals-table tbody tr:hover {
+  background-color: #baabbd;  
+  color: white;  
+  cursor: pointer;  
+}

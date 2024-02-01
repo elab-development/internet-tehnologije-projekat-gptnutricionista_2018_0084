@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import MealRow from './MealRow';  
 
 const Meals = () => {
+  const navigate = useNavigate();
   const [meals, setMeals] = useState([]);
   const palette = {
     primary: '#c9c9ee',
@@ -14,7 +17,7 @@ const Meals = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/meals');  
+        const response = await axios.get('http://localhost:8000/api/meals');
         setMeals(response.data.data);
       } catch (error) {
         console.error('Greška pri dobijanju obroka:', error);
@@ -33,23 +36,16 @@ const Meals = () => {
             <th>Ime</th>
             <th>Opis</th>
             <th>Vreme obroka</th>
-            <th>Kalorije</th>
-            <th>Proteini</th>
-            <th>Ugljeni hidrati</th>
-            <th>Masti</th>
+            <th>Akcije</th>
           </tr>
         </thead>
         <tbody>
           {meals.map((meal) => (
-            <tr key={meal.id}>
-              <td>{meal.name}</td>
-              <td>{meal.description}</td>
-              <td>{meal.time_of_day}</td>
-              <td>{meal.calories}</td>
-              <td>{meal.proteins}</td>
-              <td>{meal.carbs}</td>
-              <td>{meal.fats}</td>
-            </tr>
+            <MealRow
+              key={meal.id}
+              meal={meal}
+              onClick={() => navigate(`/meals/${meal.id}`)}
+            />
           ))}
         </tbody>
       </table>
