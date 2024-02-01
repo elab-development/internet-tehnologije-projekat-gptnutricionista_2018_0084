@@ -1,10 +1,11 @@
 .diet-plan-generator {
   width: 100%;
-  max-width: 600px;
+  max-width: 80vh;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  overflow: hidden; /* Dodato da se sadržaj ne proteže izvan diva */
 }
 
 .diet-plan-generator form {
@@ -33,4 +34,16 @@
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
+  overflow: auto;  
+}
+
+.diet-plan p {
+  margin: 5px 0;
+  line-height: 1.4;
+  overflow-wrap: break-word;  
+}
+
+.diet-plan p:first-child {
+  font-weight: bold;
+  color: #333;
 }
