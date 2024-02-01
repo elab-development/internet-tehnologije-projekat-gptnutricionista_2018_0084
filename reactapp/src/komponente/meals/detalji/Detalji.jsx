@@ -1,4 +1,3 @@
- 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +6,7 @@ import FoodItem from './FoodItem';
 const Detalji = () => {
     const { id } = useParams();
     const [meal, setMeal] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');  
 
     useEffect(() => {
         const fetchMeal = async () => {
@@ -25,6 +25,11 @@ const Detalji = () => {
         return <div>Učitavanje...</div>;
     }
 
+     
+    const filteredFoodItems = meal.food_items.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="meal-details-container">
             <h1>{meal.name}</h1>
@@ -34,11 +39,23 @@ const Detalji = () => {
             <p><strong>Proteini:</strong> {meal.proteins} g</p>
             <p><strong>Ugljeni hidrati:</strong> {meal.carbs} g</p>
             <p><strong>Masti:</strong> {meal.fats} g</p>
+
+          
+            <div className="search-box">
+                <label>Pretraži sastojke:</label>
+                <input
+                    type="text"
+                    placeholder="Unesite naziv sastojka"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
             <div className="food-items">
                 <h2>Sastojci</h2>
-                {meal.food_items.map((item) => (
+                {filteredFoodItems.map((item) => (
                     <FoodItem key={item.id} item={item} />
-                    ))}
+                ))}
             </div>
         </div>
     );
