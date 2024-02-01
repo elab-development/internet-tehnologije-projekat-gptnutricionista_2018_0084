@@ -34,6 +34,7 @@ const DietPlanGenerator = () => {
 
     return (
         <div className="diet-plan-generator">
+            <h1>Kreiraj svoj plan ishrane</h1>
             <form onSubmit={handleSubmit}> 
             <InputField
                 name="period"

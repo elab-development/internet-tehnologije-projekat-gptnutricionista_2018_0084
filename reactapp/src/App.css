@@ -7,6 +7,7 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #c9c9ee;  
+  margin-top: 20px;
 }
 
 .diet-plan-generator form {
@@ -59,6 +60,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
+  margin-top: 20px;
 }
 
 .meals-container h1 {
@@ -197,6 +199,7 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #c9c9ee;
+  margin-top: 20px;
 }
 
 .meal-details-container h1 {
@@ -270,4 +273,27 @@
 
 .food-items h2 button:hover {
   background-color: #816f68; 
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #baabbd;
+  padding: 10px 0;
+  border-radius: 8px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.navbar a.active {
+  background-color: #816f68;
+  border-radius: 4px;
+  padding: 5px 10px;
 }
