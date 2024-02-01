@@ -5,7 +5,8 @@
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow: hidden; /* Dodato da se sadržaj ne proteže izvan diva */
+  overflow: hidden;
+  background-color: #c9c9ee;  
 }
 
 .diet-plan-generator form {
@@ -23,7 +24,7 @@
 .diet-plan-generator button {
   padding: 10px;
   border: none;
-  background-color: blue;
+  background-color: #baabbd;  
   color: white;
   border-radius: 4px;
   cursor: pointer;
@@ -31,19 +32,65 @@
 
 .diet-plan {
   margin-top: 20px;
-  background-color: #f5f5f5;
+  background-color: #9f838c;  
   padding: 20px;
   border-radius: 8px;
-  overflow: auto;  
+  overflow: auto;
 }
 
 .diet-plan p {
   margin: 5px 0;
   line-height: 1.4;
-  overflow-wrap: break-word;  
+  overflow-wrap: break-word;
 }
 
 .diet-plan p:first-child {
   font-weight: bold;
   color: #333;
+}
+  
+
+
+.meals-container {
+  width: 100%;
+  max-width: 80vh;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.meals-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.meals-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.meals-table th,
+.meals-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.meals-table th {
+  background-color: #baabbd;
+  color: white;
+}
+
+.meals-table tbody tr:nth-child(even) {
+  background-color: #9f838c;
+  color: white;
+}
+
+.meals-table tbody tr:nth-child(odd) {
+  background-color: #8d7471;
+  color: white;
 }
